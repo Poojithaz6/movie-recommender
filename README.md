@@ -1,51 +1,38 @@
-Movie Recommendation System
+# Movie Recommendation System
 
-This project is a Movie Recommendation System built using Python and Streamlit.
+This project is a content-based movie recommendation system that suggests movies to users based on thei>
 
-It recommends movies similar to a selected movie based on genres, keywords, cast, crew, and overview description.
+## Features
 
-Users can filter recommendations by genre, minimum rating, and release year.
+- Fetches live movie data from TMDB API (no local CSV required)
+- Content-based recommendations using movie title, overview, and genre
+- Minimum rating filter to refine results
+- Optional release year filter to narrow suggestions
+- Dark/Light mode toggle for better UI experience
+- “Surprise Me” button for random movie selection
+- Displays movie posters, rating, release year, and a short overview
+- Handles errors gracefully when data is missing or API requests fail
 
-Movie details and posters are displayed using the TMDB API.
+## How to Run
 
-Dataset and Preprocessing:
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-username/movie-recommender.git
+   cd movie-recommender
+Install the required packages:
 
-Uses the TMDB 5000 Movies and Credits dataset from Kaggle.
-
-Missing values are removed for clean processing.
-
-JSON-like columns such as genres, keywords, cast, and crew are parsed into lists.
-
-Overview text is split into words, and all features are combined into a "tags" column.
-
-Tags are vectorized using CountVectorizer, and cosine similarity is calculated for content-based recommendations.
-
-Setup and Usage:
-
-Download the TMDB dataset from Kaggle and place the CSV files in a folder named data inside the repository.
-
-Set your TMDB API key as an environment variable or use Streamlit secrets to fetch movie posters.
-
-Install required Python packages with:
-
+bash
+Copy code
 pip install -r requirements.txt
+Set your TMDB API key as a Streamlit secret. Create a file at .streamlit/secrets.toml with the followin>
 
+toml
+Copy code
+TMDB_API_KEY = "your_api_key_here"
+Run the application:
 
-Run the application locally using:
-
+bash
+Copy code
 streamlit run app.py
 
-
-Select a movie from the dropdown menu, apply filters if desired, and see five recommended movies with posters, ratings, and release years.
-
-Tech Stack:
-
-Python, Pandas, NumPy, scikit-learn, requests, Streamlit.
-
-Future Improvements:
-
-Add collaborative filtering using user ratings.
-
-Support multiple genre filters and advanced search.
-
-Deploy the app on Streamlit Cloud for public access.
+         
