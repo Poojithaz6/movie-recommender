@@ -2,15 +2,18 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import ast
+import os
 import requests
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-# ========== CONFIG ==========
-API_KEY = "YOUR_TMDB_API_KEY"  # get from https://www.themoviedb.org/
+from dotenv import load_dotenv  
+API_KEY = st.secrets["TMDB_API_KEY"]
+print("Loaded API key:", API_KEY)
+
+API_KEY = "YOUR_TMDB_API_KEY"  
 BASE_URL = "https://api.themoviedb.org/3/movie/"
 IMG_URL = "https://image.tmdb.org/t/p/w500"
 
-# ========== LOAD DATA ==========
 @st.cache_data
 def load_data():
     movies = pd.read_csv("tmdb_5000_movies.csv")
@@ -51,7 +54,6 @@ def load_data():
 
 movies, similarity = load_data()
 
-# ========== POSTER FETCH ==========
 def fetch_poster(movie_id):
     url = f"{BASE_URL}{movie_id}?api_key={API_KEY}&language=en-US"
     data = requests.get(url).json()
@@ -61,7 +63,6 @@ def fetch_poster(movie_id):
     else:
         return "https://via.placeholder.com/300x450?text=No+Image"
 
-# ========== RECOMMENDER ==========
 def recommend(movie, genre_filter=None, min_rating=0, max_year=2100):
     if movie not in movies['title'].values:
         return []
@@ -86,7 +87,6 @@ def recommend(movie, genre_filter=None, min_rating=0, max_year=2100):
             break
     return recommendations
 
-# ========== STREAMLIT UI ==========
 st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="wide")
 
 st.title("🎬 Movie Recommendation System")
@@ -94,8 +94,7 @@ st.write("Find movies similar to your favorite one with filters and posters!")
 
 tab1, tab2 = st.tabs(["🍿 Content-Based Filtering", "🤝 Collaborative Filtering"])
 
-# ---------- TAB 1 ----------
-with tab1:
+    with tab1:
     st.header("Content-Based Recommendations")
     movie_list = movies['title'].values
     selected_movie = st.selectbox("Select a movie:", movie_list)
@@ -117,7 +116,6 @@ with tab1:
                     st.subheader(f"{rec['title']} ({rec['year']}) ⭐ {rec['rating']}")
                     st.caption(f"Movie ID: {rec['id']}")
 
-# ---------- TAB 2 ----------
 with tab2:
     st.header("Collaborative Filtering (Demo)")
     st.info("This could use user rating matrix (Surprise library, ALS, etc.). For now, just a placeholder.")
