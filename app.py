@@ -94,7 +94,7 @@ st.write("Find movies similar to your favorite one with filters and posters!")
 
 tab1, tab2 = st.tabs(["🍿 Content-Based Filtering", "🤝 Collaborative Filtering"])
 
-    with tab1:
+with tab1:
     st.header("Content-Based Recommendations")
     movie_list = movies['title'].values
     selected_movie = st.selectbox("Select a movie:", movie_list)
