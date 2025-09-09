@@ -75,8 +75,7 @@ def recommend(movie_title, min_rating=0, release_year=0):
 
 st.sidebar.header("Filters")
 min_rating = st.sidebar.slider("Minimum Rating", 0, 10, 0)
-release_year = st.sidebar.number_input("Release Year (optional)", min_value=1900, max_value=2100, value=0)
-
+release_year = st.sidebar.number_input("Release Year (optional)", min_value=0, max_value=2100, value=0)
 col1, col2 = st.columns([3,1])
 with col1:
     movie_selected = st.selectbox("Select a movie:", movies_df["title"].values)
